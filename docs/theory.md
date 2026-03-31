@@ -11,3 +11,22 @@ The base is 2, so the number is expreesed as:
 
 This allows represenation of both positive and negative values efficiently.
 
+2's compliment is not used in standard floating point representation instead used IEEE 754 Floating Point Formats.
+
+## IEEE 754 Floating-Point Formats
+IEEE uses sign-magnitude for fraction and biased exponent and designed for easier comparision and sorting of numbers.
+ 
+It contains two representations for floating point numbers:
+- IEEE single precision format -> uses 32 bits
+- IEEE double precision format -> uses 64 bits
+
+IEEE 754 floating point formats need three sub-fields: sign, fraction, and exponent.
+- There is an explicit sign bit (S) for the fraction. The sign is 0 for positive numbers and 1 for negative numbers.
+
+In general, the number is of the form 
+`N = (-1)^S * (1 + F) * 2^E`
+where,
+	S = sign bit,
+	F = fractional part,
+	E = exponent
+The base of exponent is 2. base is implied  
