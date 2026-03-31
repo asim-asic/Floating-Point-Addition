@@ -29,4 +29,19 @@ where,
 	S = sign bit,
 	F = fractional part,
 	E = exponent
-The base of exponent is 2. base is implied  
+1. The base of exponent is 2. Base is implied that is, it is not stored anywhere in representation.
+2. Magnitude of number is 1 + F because of ommitted leading 1.
+3. Exponent uses what is known as a **biased notation**. A **biased** representation is one in which every number is represented by number plus a certain bias.
+- In the IEEE single precision format, the bias is 127.
+- In the IEEE double precision format, the bias is 1023.
+
+**Example** 
+If the exponent is +1, it will be represented by +1 + 127 = 128.
+If the exponent is -2, it will be represented by -2 + 127 = 125.
+Thus, exponents less than 127 indicate actual negative exponents, and exponents greater than 127 indicate actual positive exponents.
+---
+If a positive exponent becomes too large to fit in the exponent field, the situation is called **overflow**, and if a negative exponent is too large to fit in the exponent field, that situation is called **underflow**.
+
+
+### IEEE Single Precision Format
+    
