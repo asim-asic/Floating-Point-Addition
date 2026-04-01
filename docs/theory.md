@@ -55,3 +55,100 @@ The first field is sign bit for fraction part. The next field consist of 8 bits,
 | Sign     | 1 bit  |
 | Exponent | 8 bits |
 | Fraction | 23 bits|
+
+**Example**
+
+Represent **13.45** in IEEE 754 single precision format.
+
+---
+
+### Step 1: Convert to Binary
+
+#### Integer part:
+13 → `1101`
+
+#### Fraction part (IMPORTANT):
+
+We convert **0.45 to binary** using repeated multiplication by 2:
+
+0.45 × 2 = 0.90 → 0  
+0.90 × 2 = 1.80 → 1  
+0.80 × 2 = 1.60 → 1  
+0.60 × 2 = 1.20 → 1  
+0.20 × 2 = 0.40 → 0  
+0.40 × 2 = 0.80 → 0  
+0.80 × 2 = 1.60 → 1  
+0.60 × 2 = 1.20 → 1  
+
+Collecting integer parts: `0.011100110011...`
+
+Pattern repeats: **1100 1100...**
+
+So, 13.45 = `1101.011100110011...`
+
+---
+
+### Step 2: Normalize
+
+Move decimal to get form `1.x × 2^E`
+
+`1101.011100... = 1.1010111001100... × 2^3`
+
+- Mantissa = `1.1010111001100...`
+- Exponent = `3`
+
+---
+
+###  Step 3: Biasing
+
+IEEE 754 bias = **127**
+
+Stored exponent = `3 + 127 = 130`
+
+Binary: `130 = 10000010`
+
+---
+
+### Step 4: Fraction (23 bits)
+
+Drop leading 1: `10101110011001100110011`
+
+---
+
+### Step 5: Final 32-bit Representation
+
+Sign | Exponent | Fraction  
+0 | 10000010 | 10101110011001100110011  
+
+Combined: `01000001010101110011001100110011`
+
+---
+
+###  Step 6: Convert to Hex
+
+Group into 4 bits:
+
+`0100 0001 0101 0111 0011 0011 0011 0011`
+
+Hex: `4157 3333`
+
+---
+
+### ! Negative Number (-13.45)
+
+Only sign bit changes:
+
+`11000001010101110011001100110011`
+
+ Hex: `C157 3333`
+
+---
+
+## Key Concepts
+
+- Fraction → multiply by 2 method
+- Normalization → `1.x × 2^E`
+- Biasing → `E + 127`
+- Mantissa → drop leading 1
+- Hex → group 4 bits
+-----
