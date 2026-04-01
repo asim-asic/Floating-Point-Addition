@@ -56,18 +56,19 @@ The first field is sign bit for fraction part. The next field consist of 8 bits,
 | Exponent | 8 bits |
 | Fraction | 23 bits|
 
-**Example**
+***Example***
+
 
 Represent **13.45** in IEEE 754 single precision format.
 
 ---
 
-### Step 1: Convert to Binary
+#### Step 1: Convert to Binary
 
-#### Integer part:
+##### Integer part:
 13 → `1101`
 
-#### Fraction part (IMPORTANT):
+##### Fraction part (IMPORTANT):
 
 We convert **0.45 to binary** using repeated multiplication by 2:
 
@@ -88,7 +89,7 @@ So, 13.45 = `1101.011100110011...`
 
 ---
 
-### Step 2: Normalize
+#### Step 2: Normalize
 
 Move decimal to get form `1.x × 2^E`
 
@@ -99,7 +100,7 @@ Move decimal to get form `1.x × 2^E`
 
 ---
 
-###  Step 3: Biasing
+####  Step 3: Biasing
 
 IEEE 754 bias = **127**
 
@@ -109,13 +110,13 @@ Binary: `130 = 10000010`
 
 ---
 
-### Step 4: Fraction (23 bits)
+#### Step 4: Fraction (23 bits)
 
 Drop leading 1: `10101110011001100110011`
 
 ---
 
-### Step 5: Final 32-bit Representation
+#### Step 5: Final 32-bit Representation
 
 Sign | Exponent | Fraction  
 0 | 10000010 | 10101110011001100110011  
@@ -124,7 +125,7 @@ Combined: `01000001010101110011001100110011`
 
 ---
 
-###  Step 6: Convert to Hex
+####  Step 6: Convert to Hex
 
 Group into 4 bits:
 
@@ -144,11 +145,11 @@ Only sign bit changes:
 
 ---
 
-## Key Concepts
+### Key Concepts
 
 - Fraction → multiply by 2 method
 - Normalization → `1.x × 2^E`
 - Biasing → `E + 127`
-- Mantissa → drop leading 1
+- Fraction → drop leading 1
 - Hex → group 4 bits
 -----
