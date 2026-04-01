@@ -47,4 +47,11 @@ If a positive exponent becomes too large to fit in the exponent field, the situa
 
 
 ### IEEE Single Precision Format
-    
+IEEE single point precision format uses 32 bits for representing a floating-point number, divided into three subfields:
+The first field is sign bit for fraction part. The next field consist of 8 bits, which are used for exponent. The third field consist of remaining 23 bits and used for fractional part.
+
+| Field    | Bits   |
+|----------|--------|
+| Sign     | 1 bit  |
+| Exponent | 8 bits |
+| Fraction | 23 bits|
