@@ -153,3 +153,104 @@ Only sign bit changes:
 - Fraction → drop leading 1
 - Hex → group 4 bits
 -----
+
+### IEEE Double Precision Format
+IEEE double point precision format uses 64 bits for representing a floating-point number, divided into three subfields:
+The first field is sign bit for fraction part. The next field consist of 11 bits, which are used for exponent. The third field consist of remaining 52 bits and used for fractional part.
+
+| Field    | Bits   |
+|----------|--------|
+| Sign     | 1 bit  |
+| Exponent | 11 bits|
+| Fraction | 52 bits|
+
+***Example***
+
+
+Represent **13.45** in IEEE 754 double precision format.
+
+---
+
+#### Step 1: Convert to Binary
+
+##### Integer part:
+13 → `1101`
+
+##### Fraction part (IMPORTANT):
+
+We convert **0.45 to binary** using repeated multiplication by 2:
+
+0.45 × 2 = 0.90 → 0  
+0.90 × 2 = 1.80 → 1  
+0.80 × 2 = 1.60 → 1  
+0.60 × 2 = 1.20 → 1  
+0.20 × 2 = 0.40 → 0  
+0.40 × 2 = 0.80 → 0  
+0.80 × 2 = 1.60 → 1  
+0.60 × 2 = 1.20 → 1  
+
+Collecting integer parts: `0.011100110011...`
+
+Pattern repeats: **1100 1100...**
+
+So, 13.45 = `1101.011100110011...`
+
+---
+
+#### Step 2: Normalize
+
+Move decimal to get form `1.x × 2^E`
+
+`1101.011100... = 1.1010111001100... × 2^3`
+
+- Fraction = `1.1010111001100...`
+- Exponent = `3`
+
+---
+
+####  Step 3: Biasing
+
+IEEE 754 bias = **127**
+
+Stored exponent = `3 + 1023 = 1026`
+
+Binary: `1026 = 10000000010`
+
+---
+
+#### Step 4: Fraction (51 bits)
+
+Drop leading 1: `10101110011001100110011`
+
+---
+
+#### Step 5: Final 32-bit Representation
+
+Sign | Exponent    | Fraction  
+0    | 10000000010 | 1010111001100110011001100110011001100110011.....(1100 recuring)  
+
+Combined: `0100000000101010111001100110011001100110011001100110011001100110`
+
+---
+
+####  Step 6: Convert to Hex
+
+Group into 4 bits:
+
+`0100 0000 0010 1010 1110 0110 0110 0110 0110 0110 0110 0110 0110 0110 0110 0110`
+
+Hex: `402A E666 6666 6666`
+
+---
+
+### ! Negative Number (-13.45)
+
+Only sign bit changes:
+
+
+`1100 0000 0010 1010 1110 0110 0110 0110 0110 0110 0110 0110 0110 0110 0110 0110`
+
+Hex: `C02A E666 6666 6666`
+
+---
+
