@@ -254,3 +254,48 @@ Hex: `C02A E666 6666 6666`
 
 ---
 
+## Special Cases in IEEE 754 Standard
+The IEEE 754 standard has several special cases, include 0, infinity, denormalized numbers, and NaN (Not a Number) representation.
+
+<table>
+  <tr>
+    <th colspan="2">Single Precision</th>
+    <th colspan="2">Double Precision</th>
+    <th rowspan="2">Object Represented</th>
+  </tr>
+  <tr>
+    <th>Exponent</th>
+    <th>Fraction</th>
+    <th>Exponent</th>
+    <th>Fraction</th>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>non-zero</td>
+    <td>0</td>
+    <td>non-zero</td>
+    <td>&plusmn; denormalized number</td>
+  </tr>
+  <tr>
+    <td>255</td>
+    <td>0</td>
+    <td>2047</td>
+    <td>0</td>
+    <td>&plusmn; infinity</td>
+  </tr>
+  <tr>
+    <td>255</td>
+    <td>non-zero</td>
+    <td>2047</td>
+    <td>non-zero</td>
+    <td>NaN (Not a Number)</td>
+  </tr>
+</table>
+----
