@@ -298,4 +298,8 @@ The IEEE 754 standard has several special cases, include 0, infinity, denormaliz
     <td>NaN (Not a Number)</td>
   </tr>
 </table>
-----
+
+### Zero
+The IEEE format specifies 0 to be the representation with 0s in all bits that is, all exponent and fraction bits are 0.
+
+Zero is specified as a special case in the format due to the difficulty in representing 0 in a normalized format.
