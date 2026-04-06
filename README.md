@@ -43,6 +43,7 @@ When one of the fractions is negative, the result of adding fractions may be unn
 
 ---
 
+```
 flowchart TD
 
 A[Start] --> B[Compare Exponents]
@@ -75,3 +76,4 @@ N --> O{Still normalized?}
 
 O -- No --> K
 O -- Yes --> Z1[Done]
+```
