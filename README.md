@@ -140,3 +140,8 @@ K -->|No| M[Round Fraction]
 
 M --> N[Final Result\nS E F]
 ```
+
+
+This project implements a simplified IEEE 754 single precision floating-point adder. It performs exponent comparison, fraction alignment, addition, and normalization.  
+The design supports normalized numbers and zero handling. Special cases like NaN, infinity, and denormalized numbers are not included.  
+The final result uses truncation instead of rounding.
