@@ -42,3 +42,45 @@ When one of the fractions is negative, the result of adding fractions may be unn
 7. Round to the appropriate number of bits. Is it still normalized? If not, go backto step 4.
 
 ---
+
+
+```mermaid
+flowchart TD
+
+A[Start] --> B[Compare Exponents]
+
+B --> C{Exponents equal?}
+
+C -- No --> D[Shift smaller fraction right<br/>Increment exponent]
+D --> B
+
+C -- Yes --> E[Add Fractions]
+
+E --> F{Result = 0?}
+
+F -- Yes --> G[Set exponent appropriately]
+G --> Z[Done]
+
+F -- No --> H{Fraction overflow?}
+
+H -- Yes --> I[Shift right<br/>Increment exponent]
+I --> J{Fraction normalized?}
+
+H -- No --> J
+
+J -- No --> K[Shift left<br/>Decrement exponent]
+K --> J
+
+J -- Yes --> L{Exponent overflow/underflow?}
+
+L -- Yes --> M[Indicate overflow/underflow]
+M --> X[Exception]
+
+L -- No --> N[Round fraction to required bits]
+
+N --> O{Still normalized?}
+
+O -- No --> K
+O -- Yes --> Z[Done]
+
+---
