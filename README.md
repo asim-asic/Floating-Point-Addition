@@ -138,5 +138,5 @@ I -->|Yes| K{Exponent Overflow/Underflow?}
 K -->|Yes| L[Exception]
 K -->|No| M[Round Fraction]
 
-M --> N[Final Result (S, E, F)]
+M --> N[Final Result\nS E F]
 ```
