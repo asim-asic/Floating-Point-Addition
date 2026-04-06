@@ -43,6 +43,9 @@ When one of the fractions is negative, the result of adding fractions may be unn
 
 ---
 
+Below flowchart illustrates this procedure graphically. An optimization can be added to step 1. We can identify cases where the two numbers are vastly different. If E1 .. E2 and F2 is positive, F2 will become all 0s as we right shift F2 to equalize the exponents. In this case, the result is F 5 F1 and E 5 E1, so it is a waste of time to do the shifting. If E1 .. E2 and F2 is negative, F2 will become all 1s (instead of all 0s) as we right shift F2 to equalize the exponents. When we add the fractions, we will get the wrong answer. To avoid this problem, we can skip the shifting when E1 .. E2 and set F 5 F1 and E 5 E1. Similarly, if E2 .. E1, we can skip the shifting and set F 5 F2 and E 5 E2.
+
+---
 ```mermaid
 flowchart TD
 
@@ -76,4 +79,20 @@ N --> O{Still normalized?}
 
 O -- No --> K
 O -- Yes --> Z1[Done]
+
 ```
+
+For the 4-bit fractions in our example, if |E1 2 E2| . 3, we can skip the shifting. For IEEE single precision numbers, there are 23 bits after the binary point; hence, if the exponent difference is greater than 23, the smaller number will become 0 before the exponents are equal. In general, if the exponent difference is greater than the number of available fractional bits, the sum should be set to the larger number. If E1 .. E2, set F 5 F1 and E 5 E2. If E2 .. E1, set F 5 F2 and E 5 E2. 
+
+---
+Inspection of this procedure illustrates that the following hardware units are required to implement a floating-point adder:
+- Adder (subtractor) to compare exponents (step 1a)
+- Shift register to shift the smaller number to the right (step 1b)
+- ALU (adder) to add fractions (step 2)
+- Bidirectional shifter, incrementer/decrementer (steps 4, 5)
+- Overflow detector (step 6)
+- Rounding hardware (step 7)
+
+Many of these components can be combined. For instance, the register that stores the fractions can be made a shift register in order to perform the shifts. The register that stores the exponent can be a counter with increment/decrement capability. Below diagram shows a hardware arrangement for the floating-point adder. The major components are the exponent comparator and the fraction adder. Fraction addition can be done using 2’s complement addition. It is assumed that the operands are delivered on an I/O bus. If the numbers are in a signed-magnitude form as in the IEEE format, they can be converted to 2’s complement numbers and then added. Special cases should be handled according to the requirements of the format. The sum is written back into the addend register in below diagram.
+
+
