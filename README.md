@@ -95,4 +95,48 @@ Inspection of this procedure illustrates that the following hardware units are r
 
 Many of these components can be combined. For instance, the register that stores the fractions can be made a shift register in order to perform the shifts. The register that stores the exponent can be a counter with increment/decrement capability. Below diagram shows a hardware arrangement for the floating-point adder. The major components are the exponent comparator and the fraction adder. Fraction addition can be done using 2’s complement addition. It is assumed that the operands are delivered on an I/O bus. If the numbers are in a signed-magnitude form as in the IEEE format, they can be converted to 2’s complement numbers and then added. Special cases should be handled according to the requirements of the format. The sum is written back into the addend register in below diagram.
 
+```mermaid
+flowchart LR
 
+%% Inputs
+A1[S1] --> A
+A2[E1] --> A
+A3[F1] --> A
+
+B1[S2] --> B
+B2[E2] --> B
+B3[F2] --> B
+
+%% Comparator
+A --> C[Exponent Comparator]
+B --> C
+
+%% Alignment
+C -->|E1 > E2| D1[Shift F2 Right\nIncrement E2]
+C -->|E2 > E1| D2[Shift F1 Right\nIncrement E1]
+C -->|Equal| E
+
+D1 --> E
+D2 --> E
+
+%% Fraction Addition
+E[Fraction Adder] --> F
+
+%% Normalization
+F --> G{Fraction Overflow?}
+
+G -->|Yes| H[Shift Right\nIncrement Exponent]
+G -->|No| I{Normalized?}
+
+H --> I
+
+I -->|No| J[Shift Left\nDecrement Exponent]
+J --> I
+
+I -->|Yes| K{Exponent Overflow/Underflow?}
+
+K -->|Yes| L[Exception]
+K -->|No| M[Round Fraction]
+
+M --> N[Final Result (S, E, F)]
+```
