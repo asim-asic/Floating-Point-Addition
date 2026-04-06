@@ -51,7 +51,7 @@ A[Start] --> B[Compare Exponents]
 
 B --> C{Exponents equal?}
 
-C -- No --> D[Shift smaller fraction right<\nIncrement exponent]
+C -- No --> D[Shift smaller fraction right\nIncrement exponent]
 D --> B
 
 C -- Yes --> E[Add Fractions]
