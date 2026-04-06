@@ -43,7 +43,7 @@ When one of the fractions is negative, the result of adding fractions may be unn
 
 ---
 
-```
+```mermaid
 flowchart TD
 
 A[Start] --> B[Compare Exponents]
