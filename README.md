@@ -51,7 +51,7 @@ A[Start] --> B[Compare Exponents]
 
 B --> C{Exponents equal?}
 
-C -- No --> D[Shift smaller fraction right<br/>Increment exponent]
+C -- No --> D[Shift smaller fraction right<\nIncrement exponent]
 D --> B
 
 C -- Yes --> E[Add Fractions]
@@ -63,12 +63,12 @@ G --> Z[Done]
 
 F -- No --> H{Fraction overflow?}
 
-H -- Yes --> I[Shift right<br/>Increment exponent]
+H -- Yes --> I[Shift right\nIncrement exponent]
 I --> J{Fraction normalized?}
 
 H -- No --> J
 
-J -- No --> K[Shift left<br/>Decrement exponent]
+J -- No --> K[Shift left\nDecrement exponent]
 K --> J
 
 J -- Yes --> L{Exponent overflow/underflow?}
