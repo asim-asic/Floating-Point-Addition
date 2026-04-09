@@ -5,7 +5,10 @@
 ![Status](https://img.shields.io/badge/Status-In%20Progress-yellow.svg)
 ![Repo Size](https://img.shields.io/github/repo-size/asim-asic/Floating-Point-Addition)
 
+## Reference Table
+[View Table](output.html)
 
+ 
 ## License
 
 This project is licensed under the MIT License.

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+    font-family: "Times New Roman", serif;
+}
+
+table {
+    border-collapse: collapse;
+    margin: 20px auto;
+    width: 90%;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 8px 12px;
+    text-align: center;
+}
+
+th {
+    font-weight: bold;
+}
+
+.title {
+    text-align: center;
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.subhead {
+    font-weight: normal;
+    font-size: 14px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="title">IEEE Floating Point Addition Test Cases</div>
+
+<table>
+<tr>
+    <th colspan="2">Addend</th>
+    <th colspan="2">Augend</th>
+    <th colspan="2">Sum</th>
+</tr>
+<tr>
+    <th>Number (binary)</th>
+    <th>IEEE Single Precision</th>
+    <th>Number (binary)</th>
+    <th>IEEE Single Precision</th>
+    <th>Number (binary)</th>
+    <th>IEEE Single Precision</th>
+</tr>
+
+<tr>
+<td>0</td><td>x00000000</td>
+<td>0</td><td>x00000000</td>
+<td>0</td><td>x00000000</td>
+</tr>
+
+<tr>
+<td>1 × 2⁰</td><td>x3F800000</td>
+<td>1 × 2⁰</td><td>x3F800000</td>
+<td>1 × 2¹</td><td>x40000000</td>
+</tr>
+
+<tr>
+<td>-1 × 2⁰</td><td>xBF800000</td>
+<td>-1 × 2⁰</td><td>xBF800000</td>
+<td>-1 × 2¹</td><td>xC0000000</td>
+</tr>
+
+<tr>
+<td>1 × 2⁰</td><td>x3F800000</td>
+<td>-1 × 2⁰</td><td>xBF800000</td>
+<td>0</td><td>x00000000</td>
+</tr>
+
+<tr>
+<td>1.111… × 2¹²⁷</td><td>x7F7FFFFF</td>
+<td>1 × 2⁰</td><td>x3F800000</td>
+<td>1.111… × 2¹²⁷</td><td>x7F7FFFFF</td>
+</tr>
+
+<tr>
+<td>-1.111… × 2¹²⁷</td><td>xFF7FFFFF</td>
+<td>-1 × 2⁰</td><td>xBF800000</td>
+<td>-1.111… × 2¹²⁷</td><td>xFF7FFFFF</td>
+</tr>
+
+<tr>
+<td>1.111… × 2¹²⁷</td><td>x7F7FFFFF</td>
+<td>1.111… × 2¹²⁷</td><td>x7F7FFFFF</td>
+<td>overflow</td><td>overflow</td>
+</tr>
+
+<tr>
+<td>-1.111… × 2¹²⁷</td><td>xFF7FFFFF</td>
+<td>-1.111… × 2¹²⁷</td><td>xFF7FFFFF</td>
+<td>overflow</td><td>overflow</td>
+</tr>
+
+<tr>
+<td>1.11 × 2⁸</td><td>x43E00000</td>
+<td>-1.11 × 2⁶</td><td>xC2E00000</td>
+<td>1.0101 × 2⁸</td><td>x43A80000</td>
+</tr>
+
+<tr>
+<td>-1.11 × 2⁸</td><td>xC3E00000</td>
+<td>1.11 × 2⁶</td><td>x42E00000</td>
+<td>-1.0101 × 2⁸</td><td>xC3A80000</td>
+</tr>
+
+</table>
+
+</body>
+</html> 
