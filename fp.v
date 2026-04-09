@@ -19,8 +19,8 @@ module fp_addition(
 		  DONE = 3'd6;
 
 	//--------------------------- REGISTER -------------------------
+	// 23 bit fraction + 1 hidden bit + extra bits for alignment 
 	reg [25:0] frac_a;	// fraction of component A
-				/* 23 bit fraction + 1 hidden bit + extra bits for alignment*/ 
 	reg [25:0] frac_b;	// fraction of component B
 
 	reg [7:0] exp_a;	// exponent of component A
@@ -34,8 +34,9 @@ module fp_addition(
 	wire frac_overflow;	// fraction overflow (after addition)
 	wire frac_underflow;	// fraction underflow or normalization required
 
-	wire [27:0] fraction_a_comp;	// used for substraction when sign is negative (2's complement) 
-	wire [27:0] fraction_b_comp;
+	// used for substraction when sign is negative (2's complement) 
+	wire [27:0] frac_a_comp;	
+	wire [27:0] frac_b_comp;
 
 	wire [27:0] add_out;	// output of fraction adder
 
@@ -68,13 +69,13 @@ module fp_addition(
 	assign frac_b_comp = (sign_b == 1'b1) ? ~({2'b00, frac_b}) + 1 : {2'b00, frac_b};
 	
 	// Add
-	assign add_out = (frac_a_comp + frac_b_comp);	
+	assign add_out = frac_a_comp + frac_b_comp;	
 	
 	// back to magnitude
-	assign frac_sum = ((add_out[27] == 1'b0) ? add_out : ~add_out + 1);
+	assign frac_sum = (add_out[27] == 1'b0) ? add_out : (~add_out + 1);
 	
 	// overflow or underflow detect
-	assign frac_overflow = frac_sum[27] ^ frac_sum[26];
+	assign frac_overflow = frac_sum[26];
 	assign frac_underflow = ~frac_a[25];
 
 	// pack final result
@@ -91,14 +92,9 @@ module fp_addition(
 					exp_a <= fp_input[30:23];
 					sign_a <= fp_input[31];
 					frac_a[24:0] <= {fp_input[22:0], 2'b00};
-					if(fp_input == 0)
-					begin
-						frac_a[25] <= 1'b0;
-					end	
-					else
-					begin
-						frac_a[25] <= 1'b1;
-					end
+					
+					// hidden bit: 0 for zero/denormal, 1 for normal
+					frac_a[25] <= (fp_input[30:23] != 8'b0) ? 1'b1 : 1'b0;
 					done <= 1'b0;
 					overflow <= 1'b0;
 					underflow <= 1'b0;
@@ -113,19 +109,19 @@ module fp_addition(
 				exp_b <= fp_input[30:23];
 				sign_b <= fp_input[31];
 				frac_b[24:0] <= {fp_input[22:0], 2'b00};
-				if(fp_input == 0)
-				begin
-					frac_b[25] <= 1'b0;
-				end	
-				else
-				begin
-					frac_b[25] <= 1'b1;
-				end
+				
+				frac_b[25] <= (fp_input[30:23] != 8'b0) ? 1'b1 : 1'b0;
 				state <= ALIGN;
 			   end
 		    ALIGN: begin
-				if(frac_a == 0 | frac_b == 0)
+				if(frac_a == 0 || frac_b == 0)
 				begin
+					if(frac_a == 0)
+					begin
+						frac_a <= frac_b;
+						exp_a <= exp_b;
+						sign_a <= sign_b;
+					end
 					state <= ADD;
 				end
 				else
@@ -150,12 +146,13 @@ module fp_addition(
 				sign_a <= add_out[27];
 				if(frac_overflow == 1'b0)
 				begin
+
 					frac_a <= frac_sum[25:0];
 				end
 				else
 				begin
 					frac_a <= frac_sum[26:1];
-					exp_a <= exp_a + 1;
+					exp_a <= exp_a + 1;	
 				end
 				state <= NORMALIZE;
 			   end
@@ -176,7 +173,7 @@ module fp_addition(
 					underflow <= 1'b1;
 					state <= DONE;
 				end
-				else if (frac_overflow == 1'b0)
+				else if (frac_a[25] == 1'b1)
 				begin
 					state <= DONE;
 				end
@@ -187,12 +184,12 @@ module fp_addition(
 				end
 			   end
 		     DONE: begin
-			 	if(exp_a == 255)
+			 	if(exp_a == 8'hFF)
 				begin
 					overflow <= 1'b1;
 				end
 				done <= 1'b1;
-				state <= 0;	
+				state <= IDLE;	
 			   end
 		  default: begin
 				state <= IDLE;

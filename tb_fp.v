@@ -14,26 +14,37 @@ module tb_fp_addition();
 	
 	// clock generation
 	always #5 clk = ~clk;
-
+        
+	// task to print values in modified hex format
+	task print_hex;
+		input [31:0] val;
+		begin
+			$write("x%0H%0H%0H%0H_%0H%0H%0H%0H", val[31:28], val[27:24], val[23:20], val[19:16], val[15:12], val[11:8], val[7:4], val[3:0]);
+		end
+	endtask
+	
 	// task to apply 2 inputs
 	task apply_test;
 		input [31:0] a;
 		input [31:0] b;
 		begin
-			@(posedge clk)
+			@(negedge clk)
 			start = 1;
 			fp_input = a;
-
-			@(posedge clk)
+			
+			@(negedge clk)
 			fp_input = b;
 
-			@(posedge clk)
+			@(negedge clk)
 			start = 0;
-
-			wait(done);
-			$display("A = %h | B = %h | SUM = %h | OVF = %b | UNF = %b", a, b, fp_sum, overflow, underflow);
 			
-			#10;
+			wait(done == 1'b1);
+			$write("A = "); print_hex(a);
+			$write(" | B = "); print_hex(b);
+			$write(" | SUM = "); print_hex(fp_sum);
+			$display(" | OVERFLOW = %b | UNDERFLOW = %b", overflow, underflow);
+			
+			#20;
 		end
 	endtask
 
@@ -43,21 +54,23 @@ module tb_fp_addition();
 	begin
 		clk = 0;
 		start = 0;
+		fp_input = 0;
 
-		#10
+		#12;
+
 		// 0 + 0 
 		apply_test(32'h0000_0000, 32'h0000_0000);
-		 
-		// 1 + 1
+			
+		// 1.0 + 1.0 = 2.0
 		apply_test(32'h3F80_0000, 32'h3F80_0000);
 
-		// -1 + -1 
+		// -1.0 + -1.0 = -2.0 
 		apply_test(32'hBF80_0000, 32'hBF80_0000);
 		
-		// 1 + -1
+		// 1 + -1 = 0
 		apply_test(32'h3F80_0000, 32'hBF80_0000);
 		
-		// max + 1
+		// max_float + 1
 		apply_test(32'h7F7F_FFFF, 32'h3F80_0000);
 		
 		// -max + -1 
@@ -73,7 +86,7 @@ module tb_fp_addition();
 		apply_test(32'h43E0_0000, 32'hC2E0_0000);
 		
 		// -1.11x2^8 + 1.11x2^6
-		apply_test(32'hCE30_0000, 32'h42E0_0000);	
+		apply_test(32'hC3E0_0000, 32'h42E0_0000);	
 		
 		// 1.11x2^127 + 1.11x2^6
 		apply_test(32'h7F7F_FFFF, 32'h7380_0000);	
