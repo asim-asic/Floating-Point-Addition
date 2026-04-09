@@ -6,7 +6,7 @@
 ![Repo Size](https://img.shields.io/github/repo-size/asim-asic/Floating-Point-Addition)
 
 ## Reference Table
-[View Table](output.html)
+[View Table](https://github.com/asim-asic/Floating-Point-Addition/blob/main/output.html)
 
  
 ## License
