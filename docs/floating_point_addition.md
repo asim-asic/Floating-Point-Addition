@@ -142,5 +142,4 @@ The final result uses truncation instead of rounding.
 
 ---
 © 2026 Asim Khan (asim-asic)
-
 ----
