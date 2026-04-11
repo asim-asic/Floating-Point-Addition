@@ -13,6 +13,7 @@
 
 This project implements a **32-bit IEEE-754 Floating Point Addition Unit** in Verilog.  
 The design follows a **Finite State Machine (FSM)** based approach to perform floating-point addition.
+Designed and verified following industry standard RTL design practices.
 
 ---
 
@@ -20,11 +21,25 @@ The design follows a **Finite State Machine (FSM)** based approach to perform fl
 
 - IEEE-754 single precision (32-bit)
 - FSM-based architecture
-- Handles exponent, alignment, and exponent addition
+- Handles sign, alignment, and exponent addition
 - Normalization and rounding
 - Overflow / Underflow detection
 - Linted & formatted using Verible
-- Simulated and passed so many test cases
+- Verified with multiple compliant test cases
+
+---
+
+## 🔄 FSM Architecture
+
+| State      | Description                              |
+|------------|------------------------------------------|
+| IDLE       | Waits for start signal, loads operand A  |
+| LOAD_B     | Loads operand B                          |
+| ALIGN      | Aligns exponents by shifting mantissa    |
+| ADD        | Adds aligned mantissas                   |
+| NORMALIZE  | Checks if result is zero                 |
+| CHECK      | Normalizes result, detects underflow     |
+| DONE       | Asserts done, checks overflow            |
 
 ---
 
@@ -66,6 +81,7 @@ All major IEEE 754 scenarios are verified including:
 - Overflow conditions
 
 Detailed results: [View Testcases](sim/testcase.md)
+
 ---
 
 ## 🧹 Linting & Formatting
@@ -77,12 +93,12 @@ Code quality is verified before simulation to ensure clean and maintainable desi
 
 ### 🔍 Linting
 ```bash
-verible-verilog-lint fp_addition.v
-verible-verilog-lint tb_fp_addition.v
-verible-verilog-format fp_addition.v
-verible-verilog-format --replace fp_addition.v // To remove unwanted spaces
-verible-verilog-format tb_fp_addition.v
-verible-verilog-format --replace tb_fp_addition.v // To remove unwanted spaces
+verible-verilog-lint rtl/fp_addition.v
+verible-verilog-lint rtl/tb_fp_addition.v
+verible-verilog-format rtl/fp_addition.v
+verible-verilog-format --inplace rtl/fp_addition.v // apply formatting inplace
+verible-verilog-format rtl/tb_fp_addition.v
+verible-verilog-format --inplace rtl/tb_fp_addition.v // apply formatting inplace
 ```
 ---
 
@@ -96,7 +112,9 @@ The waveform demonstrates correct FSM transitions and IEEE-754 floating-point ad
 
 ## Synthesis & Backend
 
-Synthesis and backend are in progress
+Synthesis and backend implementation are currently in progress.
+
+---
 
 ## 📄 License
 
