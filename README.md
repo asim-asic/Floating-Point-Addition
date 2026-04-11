@@ -27,7 +27,7 @@ verible-verilog-format --replace tb_fp_addition.v // To remove unwanted spaces
 
 The waveform below shows the behavior of the floating-point addition module during simulation.
 
-![Waveform](docs/waveform.png)
+![Waveform](sim/waveform.png)
  
 ## License
 
