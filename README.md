@@ -112,7 +112,7 @@ The waveform demonstrates correct FSM transitions and IEEE-754 floating-point ad
 
 ## Synthesis & Backend
 
-Synthesis and backend implementation are currently in progress.
+Synthesis and backend implementation are currently in progress.........
 
 ---
 

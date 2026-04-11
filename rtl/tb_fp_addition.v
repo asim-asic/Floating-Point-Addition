@@ -64,18 +64,15 @@ module tb_fp_addition ();
       $write(" | SUM = ");
       print_hex(fp_sum);
       $display(" | OVERFLOW = %b | UNDERFLOW = %b", overflow, underflow);
-
       #20;
     end
   endtask
-
 
   // Test cases
   initial begin
     clk = 0;
     start = 0;
     fp_input = 0;
-
     #12;
 
     // 0 + 0 

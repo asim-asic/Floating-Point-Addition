@@ -29,7 +29,6 @@ module fp_addition (
   reg sign_a;  // sign of component A
   reg sign_b;  // sign of component B
 
-
   // -------------------------- WIRES ---------------------------
   wire frac_overflow;  // fraction overflow (after addition)
   wire frac_underflow;  // fraction underflow or normalization required
@@ -39,7 +38,6 @@ module fp_addition (
   wire [27:0] frac_b_comp;
 
   wire [27:0] add_out;  // output of fraction adder
-
   wire [27:0] frac_sum;  // final fraction after normalization
 
   // ------------------------ Control ----------------------------
