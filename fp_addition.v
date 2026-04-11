@@ -71,14 +71,15 @@ module fp_addition(
 	// Add
 	assign add_out = frac_a_comp + frac_b_comp;	
 	
-	// back to magnitude
+	//Convert back to sign-magnitude
 	assign frac_sum = (add_out[27] == 1'b0) ? add_out : (~add_out + 1);
 	
 	// overflow or underflow detect
 	assign frac_overflow = frac_sum[26];
 	assign frac_underflow = ~frac_a[25];
 
-	// pack final result
+	// Pack final IEEE 754 result: sign | exponent | fraction(23 bits)
+	// frac_a[25] = hidden bit, frac_a[24:2] = 23-bit exponent
 	assign fp_sum = {sign_a, exp_a, frac_a[24:2]};
 
 
@@ -118,6 +119,7 @@ module fp_addition(
 				begin
 					if(frac_a == 0)
 					begin
+						// A is zero: copy B into A
 						frac_a <= frac_b;
 						exp_a <= exp_b;
 						sign_a <= sign_b;
@@ -143,6 +145,7 @@ module fp_addition(
 				end
 			   end
 		      ADD: begin
+			        // sign of result from MSB of 2's complement sum
 				sign_a <= add_out[27];
 				if(frac_overflow == 1'b0)
 				begin
@@ -151,6 +154,7 @@ module fp_addition(
 				end
 				else
 				begin
+					// Overflow: right shift exponent, increment exponent
 					frac_a <= frac_sum[26:1];
 					exp_a <= exp_a + 1;	
 				end
@@ -175,10 +179,12 @@ module fp_addition(
 				end
 				else if (frac_a[25] == 1'b1)
 				begin
+					// hidden bit is set - normalize, done
 					state <= DONE;
 				end
 				else
 				begin
+					// left shift to normalize
 					frac_a <= {frac_a[24:0], 1'b0};
 					exp_a <= exp_a - 1;
 				end

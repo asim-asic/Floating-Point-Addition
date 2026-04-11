@@ -24,21 +24,33 @@ module tb_fp_addition();
 	endtask
 	
 	// task to apply 2 inputs
+	/* The FSM needs:
+	   Cycle 1 (start=1): IDLE captures fp_input=a, moves to LOAD_B
+	   Cycle 2 (start=1): LOAD_B captures fp_input=b, moves to ALIGN
+	   After that: start can go low
+	*/	
 	task apply_test;
 		input [31:0] a;
 		input [31:0] b;
 		begin
+			// Cycle 1: present A with start=1 -> FSM in IDLE A
 			@(negedge clk)
 			start = 1;
 			fp_input = a;
 			
+			// Cycle 2: present B while start high -> FSM in LOAD_B
 			@(negedge clk)
 			fp_input = b;
-
+			
+			// Now deassert start - FSM is in ALIGN or beyond
 			@(negedge clk)
 			start = 0;
 			
+			// Wait for FSM to finish
 			wait(done == 1'b1);
+			@(negedge clk); 	// let output settle
+
+			// Write output to console
 			$write("A = "); print_hex(a);
 			$write(" | B = "); print_hex(b);
 			$write(" | SUM = "); print_hex(fp_sum);
@@ -107,6 +119,7 @@ module tb_fp_addition();
 	       	$finish();
 	end
 
+	// Generate vcd file to see waveform
 	initial
 	begin
 		$dumpfile("dump.vcd");
