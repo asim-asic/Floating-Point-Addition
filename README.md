@@ -102,6 +102,21 @@ verible-verilog-format --inplace rtl/tb_fp_addition.v // apply formatting inplac
 ```
 ---
 
+## 📝 Simulation Output
+
+Sample simulation log:
+
+```txt
+Input A = 3F800000, Input B = 40000000
+Result  = 40400000
+
+Input A = BF800000, Input B = 3F800000
+Result  = 00000000
+```
+[View Complete Log](sim/output.txt)
+
+---
+
 ## 📊 Simulation Waveform
 
 The waveform demonstrates correct FSM transitions and IEEE-754 floating-point addition behavior including alignment, normalization, and exception handling.
