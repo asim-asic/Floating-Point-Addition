@@ -1,32 +1,3 @@
-# Floating Point Addition — IEEE 754 Single Precision (RTL Design)
-
-A 32-bit IEEE 754 single-precision floating-point adder implemented in Verilog using a Finite State Machine (FSM).  
-Simulated using **Icarus Verilog (iverilog)** on Ubuntu.
-
----
-
-## 📁 Project Structure
-
-```
-├── fp.v          # RTL Design — Floating Point Adder (FSM)
-├── tb_fp.v       # Testbench
-└── README.md     # Project documentation
-```
-
----
-
-## ⚙️ How to Run
-
-```bash
-# Compile
-iverilog -o fp_sim fp.v tb_fp.v
-
-# Simulate
-vvp fp_sim
-```
-
----
-
 ## 🧪 Test Results
 
 | Addend (Binary)         | Addend (IEEE SP) | Augend (Binary)          | Augend (IEEE SP) | Sum (Binary)            | Sum (IEEE SP) |
@@ -48,25 +19,3 @@ vvp fp_sim
 | 1.1 × 2⁻¹²⁶              | x00C00000        | −1.0 × 2⁻¹²⁶             | x80800000        | **underflow**           | —             |
 
 ---
-
-## 🔧 Design Details
-
-- **Architecture:** Mealy FSM with 7 states
-- **States:** `IDLE → LOAD_B → ALIGN → ADD → NORMALIZE → CHECK → DONE`
-- **Features:**
-  - IEEE 754 single-precision (32-bit) addition
-  - Sign-magnitude with 2's complement arithmetic
-  - Exponent alignment via iterative shifting
-  - Post-addition normalization
-  - Overflow and underflow detection
-
----
-
-## 🛠️ Tools Used
-
-| Tool    | Purpose              |
-|---------|----------------------|
-| Vim     | Code Editor          |
-| iverilog| Compilation          |
-| vvp     | Simulation           |
-| Ubuntu  | Operating System     |
