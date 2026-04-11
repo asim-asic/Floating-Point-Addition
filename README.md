@@ -64,8 +64,14 @@ verible-verilog-format --replace tb_fp_addition.v // To remove unwanted spaces
 ```
 ---
 ## 🧪 Testcase
-Covered all testcase
-![Testcase](sim/testcase.md)
+All major IEEE 754 scenarios are verified including:
+- Zero addition
+- Positive + Positive 
+- Negative + Negative 
+- Positive + Negative
+- Large number addition
+- Overflow conditions
+Detailed results: [View Testcases](sim/testcase.md)
 
 ## 📊 Simulation Waveform
 
