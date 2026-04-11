@@ -4,8 +4,8 @@
 ![Language](https://img.shields.io/badge/Verilog-RTL-blue.svg)
 ![Status](https://img.shields.io/badge/Status-In%20Progress-yellow.svg)
 ![Repo Size](https://img.shields.io/github/repo-size/asim-asic/Floating-Point-Addition)
-![Linted](https://img.shields.io/badge/Linted%20with-Verible-blue)
-![Formatted](https://img.shields.io/badge/Formatted%20with-Verible-green)
+![Linted](https://img.shields.io/badge/Linted%20-Verible-blue.svg)
+![Formatted](https://img.shields.io/badge/Formatted%20-Verible-violet.svg)
 
 ## 🧹 Linting & Formatting
 
@@ -18,7 +18,16 @@ Code quality is verified before simulation to ensure clean and maintainable desi
 ```bash
 verible-verilog-lint fp_addition.v
 verible-verilog-lint tb_fp_addition.v
+verible-verilog-format fp_addition.v
+verible-verilog-format --replace fp_addition.v // To remove unwanted spaces
+verible-verilog-format tb_fp_addition.v
+verible-verilog-format --replace tb_fp_addition.v // To remove unwanted spaces
 ```
+## 📊 Simulation Waveform
+
+The waveform below shows the behavior of the floating-point addition module during simulation.
+
+![Waveform](docs/waveform.png)
  
 ## License
 
