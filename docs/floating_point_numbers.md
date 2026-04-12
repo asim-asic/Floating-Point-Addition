@@ -304,6 +304,37 @@ The IEEE format specifies 0 to be the representation with 0s in all bits that is
 
 Zero is specified as a special case in the format due to the difficulty in representing 0 in a normalized format.
 
+### Denormalized Numbers
+The smallest normalized number that the single precision format can represent is
+`1.0 * 2^-126`
+Numbers between this number and 0 cannot be expressed in the normalized format.
+If normalization is not made a requirement of the format, one could represent
+numbers smaller than 1.0 * 2^126.
+Hence, the IEEE floating-point format allows denormalized numbers as a special case.If the exponent is 0, and the fraction is non-zero, the number is considered denormalized. Now, the smallest number that can be represented is
+0.00000000000000000000001 * 2^-126, which is 1.0 * 2^-149.
+
+Thus, denormalization allows numbers between 1.0 * 2^-126 and 1.0 * 2^-149 to
+be represented. For double precision, the denormalized range allows numbers
+between 1.0 * 221022 and 1.0 * 2^-1074.
+
+###Infinity
+Infinity is represented by the highest exponent value together with a fraction of 0.
+In the case of single precision representation, the exponent is 255, and for double
+precision, it is 2047.
+
+###Not a Number (NaN)
+The IEEE 754 standard has a special representation to represent the result of invalid operations, such as 0/0. This special representation is called NaN or Not a Number. If the exponent is 255 and the fraction is any non-zero number, it is considered to be NaN or Not a Number.
+
+## Rounding
+When the number of bits available is smaller than the number of bits required to represent a number, rounding is employed. It is desirable to round to the nearest value. One can round up if the number is higher than halfway and round down if the number is less than halfway. Another option is to truncate, ignoring the bits beyond the allowable number of bits. One has to keep more bits in intermediate representations to achieve higher accuracy. The IEEE standard requires two extra bits in intermediate representations in order to facilitate better rounding. The two bits are called guard and round. Sometimes, a third intermediate bit is used in rounding in addition to the guard and round bits. It is called the sticky bit. The sticky bit is set whenever there are non-zero bits to the right of the round bit.
+
+The biggest challenge comes when the number falls halfway in between. The
+IEEE standard has four different rounding modes:
+- Round up: Round towards positive infinity; round up to the next higher number.
+- Round down: Round towards negative infinity; round down to the nearest smaller number.
+- Truncate: Round towards zero. Ignore bits beyond the allowable number of bits. Same as truncation in sign magnitude.
+- Unbiased: Round to nearest. If the number falls halfway, round up half the time and round down half the time. In order to achieve rounding up half the time, add 1 if the lowest bit retained is 1, and truncate if it is 0. This is based on the assumption that a 0 or 1 appears in the lowest retained bit with an equal probability. One consequence of this rounding scheme is that the rounded number always has a 0 in the lowest place.
+
 ---
 
 © 2026 Asim Khan (asim-asic)
