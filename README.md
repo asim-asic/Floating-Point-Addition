@@ -6,6 +6,7 @@
 ![Linted](https://img.shields.io/badge/Linted-Verible-yellow.svg)
 ![Formatted](https://img.shields.io/badge/Formatted-Verible-violet.svg)
 ![Simulation](https://img.shields.io/badge/Simulation-Passed-success.svg)
+![OS](https://img.shields.io/badge/OS-Linux-Magents.svg) 
 
 ---
 
